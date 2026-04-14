@@ -1,108 +1,70 @@
-@import "../styles/tokens.css";
-@import "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap";
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Base Reset ── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+  --navy-deep: #0A0F1E;
+  --navy-surface: #111827;
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --cream: #F5F5F7;
+  
+  --font-playfair: 'Playfair Display', serif;
+  --font-dm-sans: 'DM Sans', sans-serif;
+
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(201, 168, 76, 0.2);
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  background-color: var(--color-navy);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
-
-/* ── Typography Utilities ── */
-.font-display {
-  font-family: var(--font-display);
-}
-
-.text-eyebrow {
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--color-gold);
-  font-family: var(--font-body);
-  font-weight: 500;
-}
-
-/* ── Gold Gradient Text ── */
-.text-gold-gradient {
-  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 50%, var(--color-gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Glass Surface ── */
-.glass {
-  background: var(--color-surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--color-gold-border);
-}
-
-.glass-2 {
-  background: var(--color-surface-2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-gold-border);
-}
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-navy);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-gold-muted);
-  border-radius: var(--radius-full);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold);
-}
-
-/* ── Focus Ring ── */
-:focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 3px;
-  border-radius: var(--radius-sm);
-}
-
-/* ── Prefers Reduced Motion ── */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@layer base {
+  body {
+    @apply bg-[#0A0F1E] text-white font-sans selection:bg-[#C9A84C] selection:text-[#0A0F1E];
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-serif;
   }
 }
 
-/* ── Selection ── */
-::selection {
-  background: var(--color-gold-muted);
-  color: var(--color-gold-light);
+@layer components {
+  .btn-primary {
+    @apply bg-[#C9A84C] text-[#0A0F1E] px-6 py-3 rounded-lg font-semibold transition-all hover:bg-[#E8C97A] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50;
+  }
+  
+  .glass {
+    @apply bg-[var(--glass-bg)] border border-[var(--glass-border)] backdrop-blur-md;
+  }
+  
+  .glass-card {
+    @apply glass rounded-xl;
+  }
+  
+  .text-gold {
+    @apply text-[#C9A84C];
+  }
+
+  .text-gold-gradient {
+    @apply bg-gold-gradient bg-clip-text text-transparent;
+  }
+
+  .text-eyebrow {
+    @apply text-[10px] tracking-[0.25em] uppercase text-[#C9A84C] font-dm font-bold;
+  }
+}
+
+/* Scrollbar styling for Dark Luxury */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0F1E;
+}
+::-webkit-scrollbar-thumb {
+  background: #1F2937;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C9A84C;
 }

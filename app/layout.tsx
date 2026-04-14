@@ -1,99 +1,61 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
-import { QueryProvider } from "@/components/providers/QueryProvider";
 import "./globals.css";
+import { Header } from "@/components/organisms/Header";
+import { Footer } from "@/components/organisms/Footer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
-  weight: ["400", "700", "900"],
-  style: ["normal", "italic"],
 });
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
   display: "swap",
-  weight: ["300", "400", "500", "600"],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0A0F1E",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://academiapro.ec"),
   title: {
-    default: "AcademiaPro — Servicios Académicos de Élite en Ecuador",
+    default: "AcademiaPro | Centro de Excelencia Académica",
     template: "%s | AcademiaPro",
   },
-  description:
-    "Deberes, ensayos, investigaciones, infografías, videos y mapas conceptuales para universitarios ecuatorianos. Resultados garantizados, entrega puntual y total confidencialidad.",
-  keywords: [
-    "deberes universitarios",
-    "ensayos académicos",
-    "investigaciones Ecuador",
-    "infografías académicas",
-    "tareas universitarias",
-    "asesoría académica Ecuador",
-  ],
+  description: "Servicios académicos de élite en Ecuador. Ensayos, investigaciones y proyectos universitarios con resultados garantizados.",
   openGraph: {
     type: "website",
     locale: "es_EC",
     url: "https://academiapro.ec",
     siteName: "AcademiaPro",
-    title: "AcademiaPro — Servicios Académicos de Élite",
-    description:
-      "La plataforma académica de mayor prestigio para universitarios ecuatorianos.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "AcademiaPro — Servicios Académicos de Élite",
-      },
-    ],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AcademiaPro — Servicios Académicos de Élite",
-    description:
-      "La plataforma académica de mayor prestigio para universitarios ecuatorianos.",
-    images: ["/og-image.jpg"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  alternates: {
-    canonical: "https://academiapro.ec",
+    title: "AcademiaPro | Excelencia Académica",
+    description: "Tu éxito académico, redefinido.",
   },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html
-      lang="es"
-      className={`${playfair.variable} ${dmSans.variable}`}
-    >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body className="font-dm bg-navy text-white antialiased">
-        <QueryProvider>{children}</QueryProvider>
+    <html lang="es" className={`${playfair.variable} ${dmSans.variable}`}>
+      <body className="antialiased bg-[#0A0F1E] min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
