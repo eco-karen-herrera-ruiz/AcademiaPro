@@ -8,9 +8,15 @@ export async function middleware(request: NextRequest) {
     },
   });
 
+  // PROTECCIÓN CRÍTICA: Si las variables no existen, devolvemos la respuesta base 
+  // antes de intentar instanciar el cliente de Supabase.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return supabaseResponse;
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     {
       cookies: {
         getAll() {
@@ -31,12 +37,7 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // IMPORTANTE: No llamar a getUser() si las variables de entorno no existen (evita el 500 en build/preview)
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    return supabaseResponse;
-  }
-
-  // Refrescar sesiÃ³n
+  // Refrescar sesión
   const {
     data: { user },
   } = await supabase.auth.getUser();
